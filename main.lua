@@ -2,6 +2,7 @@ function love.load()
     janelaJogo = {x = love.graphics.getWidth(), y = love.graphics.getHeight()}
     palavraAtual = 1
     palavras = {}
+    dificuldade = 10
     jogador = {
         pontuacao = 0,
         vida = 4
@@ -14,7 +15,7 @@ function love.update()
         return
     end
 
-    palavras[palavraAtual].y = palavras[palavraAtual].y + 5
+    palavras[palavraAtual].y = palavras[palavraAtual].y + dificuldade
     if palavras[palavraAtual].y == 600 then
         palavraAtual = palavraAtual + 1
         jogador.vida = jogador.vida - 1
