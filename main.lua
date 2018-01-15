@@ -1,6 +1,11 @@
 function love.load()
+    janelaJogo = {x = love.graphics.getWidth(), y = love.graphics.getHeight()}
     palavraAtual = 1
     palavras = {}
+    jogador = {
+        pontuacao = 0,
+        vida = 5
+    }
     carregaPalavras()
 end
 
@@ -17,16 +22,18 @@ function love.update()
     --Verifica se toda a palavra ja foi digitada e passa para a palavra seguinte
     if palavras[palavraAtual].posicaoTextoValida > string.len(palavras[palavraAtual].texto) then
         palavraAtual = palavraAtual + 1
+        jogador.pontuacao =  jogador.pontuacao + 1
     end
 end
 
 function love.draw()
     love.graphics.setColor(255, 255, 255)
-    love.graphics.print(string.format("Pontuação: %s", palavraAtual - 1), 700, 550, 0, 1)
+    love.graphics.print(string.format("Pontuação: %s", jogador.pontuacao), 
+        janelaJogo.x - 100, 10, 0, 1)
 
     if terminouJogo() then
         love.graphics.setColor(255, 0, 0)
-        love.graphics.print("***** Fim de Jogo :) *****", 250, 275, 0, 2)
+        love.graphics.print("***** Fim de Jogo :) *****", janelaJogo.x - 650, 275, 0, 2)
         return
     end
 
@@ -70,7 +77,7 @@ end
 function carregaPalavras()
     for palavra in love.filesystem.lines("palavras.txt") do
         p = {
-            x = 150,
+            x = janelaJogo.x - 600,
             y = 0,
             texto = palavra,
             controleTexto = {},
