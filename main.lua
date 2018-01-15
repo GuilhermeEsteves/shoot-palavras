@@ -16,20 +16,19 @@ function love.update()
 
     palavras[palavraAtual].y = palavras[palavraAtual].y + 1
     if palavras[palavraAtual].y == 600 then
-        palavras[palavraAtual].y = 0
+        palavraAtual = palavraAtual + 1
+        jogador.vida = jogador.vida - 1
     end
 
     --Verifica se toda a palavra ja foi digitada e passa para a palavra seguinte
     if palavras[palavraAtual].posicaoTextoValida > string.len(palavras[palavraAtual].texto) then
         palavraAtual = palavraAtual + 1
-        jogador.pontuacao =  jogador.pontuacao + 1
+        jogador.pontuacao = jogador.pontuacao + 1
     end
 end
 
 function love.draw()
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.print(string.format("Pontuação: %s", jogador.pontuacao), 
-        janelaJogo.x - 100, 10, 0, 1)
+    atualizaDadosJogador()
 
     if terminouJogo() then
         love.graphics.setColor(255, 0, 0)
@@ -71,7 +70,22 @@ function love.keypressed(key)
 end
 
 function terminouJogo()
-    return palavraAtual > table.getn(palavras)
+    return palavraAtual > table.getn(palavras) or jogador.vida == 0
+end
+
+function atualizaDadosJogador()
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.print("Vida:", janelaJogo.x - 205, 10, 0, 1)
+
+    love.graphics.setColor(255, 0, 0)
+    for i = 1, jogador.vida do
+        for j = 1, 4 do
+            love.graphics.print("*", janelaJogo.x - 180 + (i * 10), 10, 0, 1.5)
+        end
+    end
+
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.print(string.format("Pontuação: %s", jogador.pontuacao), janelaJogo.x - 100, 10, 0, 1)
 end
 
 function carregaPalavras()
