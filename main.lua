@@ -1,34 +1,8 @@
-local palavraAtual = 1
-local palavras = {
-    {
-        x = 150,
-        y = 0,
-        texto = "hello",
-        controleTexto = {0, 0, 0, 0, 0},
-        posicaoTextoValida = 1
-    },
-    {
-        x = 150,
-        y = 0,
-        texto = "camelo",
-        controleTexto = {0, 0, 0, 0, 0, 0},
-        posicaoTextoValida = 1
-    },
-    {
-        x = 150,
-        y = 0,
-        texto = "laranja",
-        controleTexto = {0, 0, 0, 0, 0, 0, 0},
-        posicaoTextoValida = 1
-    },
-    {
-        x = 150,
-        y = 0,
-        texto = "melancia",
-        controleTexto = {0, 0, 0, 0, 0, 0, 0, 0},
-        posicaoTextoValida = 1
-    }
-}
+function love.load()
+    palavraAtual = 1
+    palavras = {}
+    carregaPalavras()
+end
 
 function love.update()
     if terminouJogo() then
@@ -75,7 +49,7 @@ function love.keypressed(key)
     if terminouJogo() then
         return
     end
-    
+
     if
         key ==
             string.sub(
@@ -91,4 +65,22 @@ end
 
 function terminouJogo()
     return palavraAtual > table.getn(palavras)
+end
+
+function carregaPalavras()
+    for palavra in love.filesystem.lines("palavras.txt") do
+        p = {
+            x = 150,
+            y = 0,
+            texto = palavra,
+            controleTexto = {},
+            posicaoTextoValida = 1
+        }
+
+        for i = 1, string.len(palavra) do
+            table.insert(p.controleTexto, 0)
+        end
+
+        table.insert(palavras, p)
+    end
 end
