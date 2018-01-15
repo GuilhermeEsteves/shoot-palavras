@@ -1,4 +1,4 @@
-# Love2d Lua - shoot-palavras
-Jogo de acertar palavras
+# shoot-palavras
+Love2d Lua - Jogo de acertar palavras
 
 Feito em Love2d com linguagem lua
