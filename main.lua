@@ -4,7 +4,7 @@ function love.load()
     palavras = {}
     jogador = {
         pontuacao = 0,
-        vida = 5
+        vida = 4
     }
     carregaPalavras()
 end
@@ -14,10 +14,13 @@ function love.update()
         return
     end
 
-    palavras[palavraAtual].y = palavras[palavraAtual].y + 1
+    palavras[palavraAtual].y = palavras[palavraAtual].y + 5
     if palavras[palavraAtual].y == 600 then
         palavraAtual = palavraAtual + 1
         jogador.vida = jogador.vida - 1
+        if terminouJogo() then
+            return
+        end
     end
 
     --Verifica se toda a palavra ja foi digitada e passa para a palavra seguinte
